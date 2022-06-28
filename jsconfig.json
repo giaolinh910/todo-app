@@ -1,8 +1,5 @@
 {
-  "vueCompilerOptions": {
-    "experimentalDisableTemplateSupport": true
-},
-"compilerOptions": {
-  "jsx": "preserve"
-}
+  "include": [
+    "./src/**/*"
+  ]
 }
