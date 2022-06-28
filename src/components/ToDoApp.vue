@@ -1,4 +1,4 @@
-<template>
+<template class="all">
    <div class="container" style="max-width: 600px">
     <h2 class="text-center mt-5">Todo App</h2>
 
@@ -17,8 +17,8 @@
     <table class="table table-bordered mt-5">
       <thead>
         <tr>
-          <th scope="col">Task</th>
-          <th scope="col">Nội dung công việc</th>
+          <th scope="col">Công việc</th>
+          <th scope="col">Trạng thái</th>
           <th scope="col" class="text-center">Xóa</th>
           <th scope="col" class="text-center">Sửa</th>
         </tr>
@@ -35,9 +35,9 @@
               class="pointer noselect"
               @click="changeStatus(index)"
               :class="{
-                'text-danger': task.status === 'to-do',
-                'text-success': task.status === 'finished',
-                'text-warning': task.status === 'in-progress',
+                'text-danger': task.status === 'Việc cần làm',
+                'text-success': task.status === 'Đang làm',
+                'text-warning': task.status === 'Đã hoàn thành',
               }"
             >
               {{ capitalizeFirstChar(task.status) }}
@@ -70,73 +70,49 @@ export default {
     return {
       task: "",
       editedTask: null,
-      statuses: ["to-do", "in-progress", "finished"],
-
-      /* Status could be: 'to-do' / 'in-progress' / 'finished' */
+      statuses: ["Việc cần làm", "Đang làm", "Đã hoàn thành"],
       tasks: [
         {
-          name: "Steal bananas from the supermarket.",
-          status: "to-do",
+          name: "Ăn cơm đúng giờ",
+          status: "Việc cần làm",
         },
         {
-          name: "Eat 1 kg chocolate in 1 hour.",
-          status: "in-progress",
+          name: "Chạy bộ 30p ",
+          status: "Việc cần làm",
         },
         {
-          name: "Create YouTube video.",
-          status: "finished",
+          name: "Đọc sách 30p",
+          status: "Việc cần làm",
         },
       ],
     };
   },
 
   methods: {
-    /**
-     * Capitalize first character
-     */
     capitalizeFirstChar(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
     },
-
-    /**
-     * Change status of task by index
-     */
     changeStatus(index) {
       let newIndex = this.statuses.indexOf(this.tasks[index].status);
       if (++newIndex > 2) newIndex = 0;
       this.tasks[index].status = this.statuses[newIndex];
     },
-
-    /**
-     * Deletes task by index
-     */
     deleteTask(index) {
       this.tasks.splice(index, 1);
     },
-
-    /**
-     * Edit task
-     */
     editTask(index) {
       this.task = this.tasks[index].name;
       this.editedTask = index;
     },
-
-    /**
-     * Add / Update task
-     */
     submitTask() {
       if (this.task.length === 0) return;
-
-      /* We need to update the task */
       if (this.editedTask != null) {
         this.tasks[this.editedTask].name = this.task;
         this.editedTask = null;
       } else {
-        /* We need to add new task */
         this.tasks.push({
           name: this.task,
-          status: "todo",
+          status: "Việc cần làm",
         });
       }
 
@@ -151,13 +127,12 @@ export default {
   cursor: pointer;
 }
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none; 
+  -khtml-user-select: none; 
+  -moz-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none; 
 }
 .line-through {
   text-decoration: line-through;
